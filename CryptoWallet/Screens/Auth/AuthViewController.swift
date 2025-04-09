@@ -219,5 +219,13 @@ final class AuthViewController: UIViewController {
 // MARK: - extensions
 
 extension AuthViewController: UITextFieldDelegate {
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == usernameTextField {
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            textField.resignFirstResponder()
+            loginButtonTapped()
+        }
+        return true
+    }
 }
