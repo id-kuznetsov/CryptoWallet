@@ -8,12 +8,10 @@
 import UIKit
 
 final class AuthViewController: UIViewController {
-
-    // MARK: - Public Properties
-    
-    
     
     // MARK: - Private Properties
+    
+    private var viewModel: AuthViewModelProtocol
     
     private lazy var authImageView: UIImageView = {
         let imageView = UIImageView(image: .auth)
@@ -55,7 +53,15 @@ final class AuthViewController: UIViewController {
     
     // MARK: - Initialisers
     
+    init(viewModel: AuthViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -63,7 +69,7 @@ final class AuthViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
+        setupBindings()
         setupKeyboardConfiguration()
     }
     
@@ -75,7 +81,9 @@ final class AuthViewController: UIViewController {
     
     @objc
     private func loginButtonTapped() {
-        // TODO: login logic
+        guard let username = usernameTextField.text,
+              let password = passwordTextField.text else { return }
+        viewModel.login(username: username, password: password)
     }
     
     
@@ -84,6 +92,26 @@ final class AuthViewController: UIViewController {
     
     
     // MARK: - Private Methods
+    
+    private func setupBindings() {
+        viewModel.onSuccess = { [weak self] in
+            self?.navigateToMainScreen()
+        }
+        viewModel.onFailure = { [weak self] message in
+            self?.showError(message)
+        }
+    }
+    
+    private func navigateToMainScreen() {
+        print("Successfully logged in")
+        // TODO: navigate to tabBars
+    }
+
+    private func showError(_ message: String) {
+        print("Error login")
+        // TODO: show alert
+    }
+    
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundGray1
