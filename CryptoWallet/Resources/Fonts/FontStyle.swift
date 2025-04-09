@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PoppinsFont: String {
+enum FontStyle: String {
     case black = "Poppins-Black"
     case blackItalic = "Poppins-BlackItalic"
     case bold = "Poppins-Bold"

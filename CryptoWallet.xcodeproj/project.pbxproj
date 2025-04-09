@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5C5B95822DA5AB3000482628 /* Exceptions for "CryptoWallet" folder in "CryptoWallet" target */ = {
+		5C5B96632DA6524B00482628 /* Exceptions for "CryptoWallet" folder in "CryptoWallet" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -24,7 +24,7 @@
 		5C5B95722DA5AB2E00482628 /* CryptoWallet */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				5C5B95822DA5AB3000482628 /* Exceptions for "CryptoWallet" folder in "CryptoWallet" target */,
+				5C5B96632DA6524B00482628 /* Exceptions for "CryptoWallet" folder in "CryptoWallet" target */,
 			);
 			path = CryptoWallet;
 			sourceTree = "<group>";
