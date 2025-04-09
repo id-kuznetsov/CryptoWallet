@@ -7,19 +7,34 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private let authService = AuthService.shared
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let viewModel = AuthViewModel()
-        let vc = AuthViewController(viewModel: viewModel)
-
-        window?.rootViewController = vc
+        
+        if authService.isLoggedIn {
+            showMainScreen()
+        } else {
+            showAuthScreen()
+        }
+        
         window?.makeKeyAndVisible()
+    }
+
+    private func showAuthScreen() {
+        let viewModel = AuthViewModel()
+        let authViewController = AuthViewController(viewModel: viewModel)
+        window?.rootViewController = authViewController
+    }
+
+    private func showMainScreen() {
+        let mainTabBarViewController = MainTabBarViewController()
+        window?.rootViewController = mainTabBarViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}

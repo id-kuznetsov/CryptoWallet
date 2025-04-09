@@ -104,7 +104,11 @@ final class AuthViewController: UIViewController {
     
     private func navigateToMainScreen() {
         print("Successfully logged in")
-        // TODO: navigate to tabBars
+        let mainTabBarViewController = MainTabBarViewController()
+        if let window = view.window {
+            window.rootViewController = mainTabBarViewController
+            window.makeKeyAndVisible()
+        }
     }
 
     private func showError(_ message: String) {
@@ -211,7 +215,7 @@ final class AuthViewController: UIViewController {
         
     @objc
     func viewTapped(_ recognizer: UITapGestureRecognizer) {
-        view.endEditing(true) // resign first responder
+        view.endEditing(true)
     }
     
 }
