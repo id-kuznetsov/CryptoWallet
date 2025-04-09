@@ -35,11 +35,14 @@ class AuthViewController: UIViewController {
     
     private lazy var usernameTextField: CustomTextField = {
         let textField = CustomTextField(backgroundText: "Username", image: .icUser)
+        textField.delegate = self
         return textField
     }()
     
     private lazy var passwordTextField: CustomTextField = {
         let textField = CustomTextField(backgroundText: "Password", image: .icPassword)
+        textField.isSecureTextEntry = true
+        textField.delegate = self
         return textField
     }()
     
@@ -58,10 +61,16 @@ class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
+        
+        setupKeyboardConfiguration()
     }
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Action
     
     @objc
@@ -126,8 +135,61 @@ class AuthViewController: UIViewController {
         ]
     }
     
-
-
+    // MARK: Keyboard settings
+    
+    private func setupKeyboardConfiguration() {
+        setupKeyboardObservers()
+        setupDismissKeyboardGesture()
+    }
+    
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc
+    private func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -keyboardHeight
+            }
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    private func setupDismissKeyboardGesture() {
+        let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_: )))
+        view.addGestureRecognizer(dismissKeyboardTap)
+    }
+        
+    @objc
+    func viewTapped(_ recognizer: UITapGestureRecognizer) {
+        view.endEditing(true) // resign first responder
+    }
+    
 }
 
 // MARK: - extensions
+
+extension AuthViewController: UITextFieldDelegate {
+    
+}
