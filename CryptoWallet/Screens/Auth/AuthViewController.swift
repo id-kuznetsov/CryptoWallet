@@ -112,10 +112,16 @@ final class AuthViewController: UIViewController {
     }
 
     private func showError(_ message: String) {
-        print("Error login")
-        // TODO: show alert
+        view.endEditing(true)
+        AlertPresenter.presentAlertWithTwoSelections(
+            on: self,
+            title: message,
+            firstActionTitle: "Повторить",
+            secondActionTitle: "Отменить") { [weak self] in
+                self?.usernameTextField.text = nil
+                self?.passwordTextField.text = nil
+            }
     }
-    
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundGray1
