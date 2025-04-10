@@ -14,6 +14,7 @@ protocol CryptoListViewModelProtocol {
     var coinsCount: Int { get }
     
     func getCoin(at index: Int) -> CryptoCurrency?
+    func sortItems(by sortOption: SortOption)
     func loadCoins()
 }
 
@@ -34,6 +35,16 @@ final class CryptoListViewModel: CryptoListViewModelProtocol {
     func getCoin(at index: Int) -> CryptoCurrency? {
         guard index < coins.count else { return nil }
         return coins[index]
+    }
+    
+    func sortItems(by sortOption: SortOption) {
+        switch sortOption {
+        case .increasing:
+            coins.sort { $0.priceUSD < $1.priceUSD }
+        case .decreasing:
+            coins.sort { $0.priceUSD > $1.priceUSD }
+        }
+        onCoinsUpdate?()
     }
     
     func loadCoins() {

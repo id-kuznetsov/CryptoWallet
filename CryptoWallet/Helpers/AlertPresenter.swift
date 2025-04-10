@@ -29,5 +29,24 @@ final class AlertPresenter {
 
         viewController.present(alertController, animated: true)
     }
+    
+    static func presentSortAlert(on viewController: UIViewController,
+                                 title: String = "Сортировка",
+                                 sortOptions: [SortOption],
+                                 preferredStyle: UIAlertController.Style = .actionSheet,
+                                 sortHandler: @escaping (SortOption) -> Void) {
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: preferredStyle)
+
+        for sortOption in sortOptions {
+            let action = UIAlertAction(title: sortOption.title, style: .default) { _ in
+                sortHandler(sortOption)
+            }
+            alertController.addAction(action)
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        alertController.addAction(cancelAction)
+
+        viewController.present(alertController, animated: true)
+    }
 
 }

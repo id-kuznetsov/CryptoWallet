@@ -137,7 +137,12 @@ final class CryptoListViewController: UIViewController {
     
     @objc
     private func didTapSortButton() {
-        print("didTapSortButton")
+        AlertPresenter.presentSortAlert(
+            on: self,
+            sortOptions: [.increasing, .decreasing]
+        ) { [weak self] selectedSortOption in
+            self?.viewModel.sortItems(by: selectedSortOption)
+        }
     }
 
     // MARK: - Private Methods
