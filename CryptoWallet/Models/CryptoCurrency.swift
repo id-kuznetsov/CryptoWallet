@@ -15,5 +15,5 @@ struct CryptoCurrency {
     let percentChange24h: Double
     let marketCapUSD: Double
     let circulatingSupply: Double
-    let imageUrl: UIImage?
+    let image: UIImage?
 }
