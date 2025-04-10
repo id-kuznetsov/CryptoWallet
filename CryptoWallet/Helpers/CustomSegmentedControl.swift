@@ -32,7 +32,7 @@ final class CustomSegmentedControl: UIView {
     private let stackView = UIStackView()
     private let selectorView = UIView()
     
-    // MARK: - Init
+    // MARK: - Initialisers
     
     init(segments: [String]) {
         self.segments = segments
@@ -51,7 +51,7 @@ final class CustomSegmentedControl: UIView {
         updateSelectorFrame(animated: false)
     }
     
-    // MARK: - Setup
+    // MARK: - Private Methods
     
     private func setupView() {
         backgroundColor = .wSegment

@@ -19,7 +19,7 @@ final class CoinMetricsService {
     private let urlSession = URLSession.shared
     private var tasks: [String: URLSessionTask] = [:]
     
-    // MARK: - Initializers
+    // MARK: - Initialisers
     
     private init() {}
     

@@ -8,13 +8,13 @@
 import UIKit
 
 final class CryptoListViewController: UIViewController {
-
+    
     // MARK: - Private Properties
     
     private var viewModel: CryptoListViewModelProtocol
     
     private lazy var titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = .white
         label.font = FontStyle.semiBold.font(size: 32)
         label.textAlignment = .left
@@ -32,6 +32,17 @@ final class CryptoListViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var moreOptionsView: MoreOptionsView = {
+        let view = MoreOptionsView()
+        view.onUpdateButtonTapped = { [weak self] in
+            self?.didTapUpdateButton()
+        }
+        view.onExitButtonTapped = { [weak self] in
+            self?.didTapExitButton()
+        }
+        return view
     }()
     
     private lazy var affiliateLabel: UILabel = {
@@ -121,7 +132,7 @@ final class CryptoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
         
         bindViewModel()
@@ -132,7 +143,17 @@ final class CryptoListViewController: UIViewController {
     
     @objc
     private func didTapMoreButton() {
-        print("didTapMoreButton")
+        toggleMoreOptionsView()
+    }
+    
+    private func didTapUpdateButton() {
+        viewModel.loadCoins()
+        moreOptionsView.removeFromSuperview()
+    }
+    
+    private func didTapExitButton() {
+        viewModel.logout()
+        moreOptionsView.removeFromSuperview()
     }
     
     @objc
@@ -170,7 +191,32 @@ final class CryptoListViewController: UIViewController {
             //  TODO: добавить метод в AlertPresenter
         }
     }
-
+    
+    private func toggleMoreOptionsView() {
+        if moreOptionsView.superview == nil {
+            view.addSubview(moreOptionsView)
+            
+            moreOptionsView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate(
+                [
+                    moreOptionsView.trailingAnchor.constraint(equalTo: rightNavBarButton.trailingAnchor, constant: -4),
+                    moreOptionsView.topAnchor.constraint(equalTo: rightNavBarButton.bottomAnchor, constant: 8),
+                    moreOptionsView.widthAnchor.constraint(equalToConstant: 157),
+                    moreOptionsView.heightAnchor.constraint(equalToConstant: 102)
+                ]
+            )
+            moreOptionsView.alpha = 0
+            UIView.animate(withDuration: 0.3) {
+                self.moreOptionsView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.moreOptionsView.alpha = 0
+            }) { _ in
+                self.moreOptionsView.removeFromSuperview()
+            }
+        }
+    }
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundMain
@@ -194,7 +240,7 @@ final class CryptoListViewController: UIViewController {
         
         setupConstraints()
     }
-
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate(
             titleLabelConstraints() +
@@ -209,7 +255,7 @@ final class CryptoListViewController: UIViewController {
             spinnerConstraints()
         )
     }
-
+    
     private func titleLabelConstraints() -> [NSLayoutConstraint] {
         [
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
@@ -318,8 +364,6 @@ extension CryptoListViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 extension CryptoListViewController: UITableViewDelegate {
