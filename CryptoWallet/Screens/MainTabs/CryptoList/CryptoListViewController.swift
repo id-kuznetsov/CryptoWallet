@@ -97,6 +97,13 @@ final class CryptoListViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .wBlue
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
+    
     // MARK: - Initialisers
     
     init(viewModel: CryptoListViewModelProtocol) {
@@ -109,15 +116,17 @@ final class CryptoListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
+        
+        bindViewModel()
+        viewModel.loadCoins()
+        
     }
-    
     
     // MARK: - Action
     
@@ -130,12 +139,28 @@ final class CryptoListViewController: UIViewController {
     private func didTapSortButton() {
         print("didTapSortButton")
     }
-    
-    // MARK: - Public Methods
-    
-    
-    
+
     // MARK: - Private Methods
+    
+    private func bindViewModel() {
+        viewModel.onLoadingChange = { [weak self] isLoading in
+            isLoading ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
+        }
+        
+        viewModel.onCoinsUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        
+        viewModel.onError = { [weak self] errorMessage in
+            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(alert, animated: true)
+            //  TODO: добавить метод в AlertPresenter
+        }
+    }
+
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundMain
@@ -149,7 +174,8 @@ final class CryptoListViewController: UIViewController {
             backgroundView,
             trendingLabel,
             sortButton,
-            tableView
+            tableView,
+            spinner
         ]
         subviews.forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -169,7 +195,8 @@ final class CryptoListViewController: UIViewController {
             backgroundViewConstraints() +
             trendingLabelConstraints() +
             sortButtonConstraints() +
-            tableViewConstraints()
+            tableViewConstraints() +
+            spinnerConstraints()
         )
     }
 
@@ -248,7 +275,13 @@ final class CryptoListViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: trendingLabel.bottomAnchor, constant: 16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-            
+        ]
+    }
+    
+    private func spinnerConstraints() -> [NSLayoutConstraint] {
+        [
+            spinner.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
         ]
     }
     
@@ -280,7 +313,9 @@ extension CryptoListViewController: UITableViewDataSource {
 }
 
 extension CryptoListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: переход
+    }
 }
 
 
