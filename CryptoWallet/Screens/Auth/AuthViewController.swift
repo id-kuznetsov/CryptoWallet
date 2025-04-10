@@ -86,11 +86,6 @@ final class AuthViewController: UIViewController {
         viewModel.login(username: username, password: password)
     }
     
-    
-    // MARK: - Public Methods
-    
-    
-    
     // MARK: - Private Methods
     
     private func setupBindings() {
@@ -103,7 +98,6 @@ final class AuthViewController: UIViewController {
     }
     
     private func navigateToMainScreen() {
-        print("Successfully logged in")
         let mainTabBarViewController = MainTabBarViewController()
         if let window = view.window {
             window.rootViewController = mainTabBarViewController

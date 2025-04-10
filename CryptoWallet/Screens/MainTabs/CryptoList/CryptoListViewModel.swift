@@ -16,6 +16,7 @@ protocol CryptoListViewModelProtocol {
     func getCoin(at index: Int) -> CryptoCurrency?
     func sortItems(by sortOption: SortOption)
     func loadCoins()
+    func logout()
 }
 
 final class CryptoListViewModel: CryptoListViewModelProtocol {
@@ -25,6 +26,7 @@ final class CryptoListViewModel: CryptoListViewModelProtocol {
     var onError: ((String) -> Void)?
     
     private var coinService = CoinMetricsService.shared
+    private let authService = AuthService.shared
     
     private var coins: [CryptoCurrency] = []
     
@@ -86,11 +88,16 @@ final class CryptoListViewModel: CryptoListViewModelProtocol {
             self.onLoadingChange?(false)
             if errors.isEmpty {
                 self.coins = loadedCoins
+                self.coins.sort { $0.priceUSD > $1.priceUSD }
                 self.onCoinsUpdate?()
             } else {
                 let errorDescription = errors.first?.localizedDescription ?? "Unknown error"
                 self.onError?(errorDescription)
             }
         }
+    }
+    
+    func logout() {
+        authService.logout()
     }
 }

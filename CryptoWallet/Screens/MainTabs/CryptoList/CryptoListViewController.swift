@@ -154,6 +154,13 @@ final class CryptoListViewController: UIViewController {
     private func didTapExitButton() {
         viewModel.logout()
         moreOptionsView.removeFromSuperview()
+        
+        if let window = view.window {
+            let authViewModel = AuthViewModel()
+            let authViewController = AuthViewController(viewModel: authViewModel)
+            window.rootViewController = authViewController
+            window.makeKeyAndVisible()
+        }
     }
     
     @objc
