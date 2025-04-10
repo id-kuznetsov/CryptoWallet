@@ -21,7 +21,8 @@ final class MainTabBarViewController: UITabBarController {
     // MARK: - Private Methods
     
     private func setTabs() {
-        let cryptoListViewController = CryptoListViewController()
+        let cryptoListViewModel = CryptoListViewModel()
+        let cryptoListViewController = CryptoListViewController(viewModel: cryptoListViewModel)
         cryptoListViewController.tabBarItem = UITabBarItem(
             title: nil,
             image: .icHome,

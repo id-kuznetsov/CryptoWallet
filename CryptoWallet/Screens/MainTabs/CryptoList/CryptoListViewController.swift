@@ -11,6 +11,8 @@ final class CryptoListViewController: UIViewController {
 
     // MARK: - Private Properties
     
+    private var viewModel: CryptoListViewModelProtocol
+    
     private lazy var titleLabel: UILabel = {
        let label = UILabel()
         label.textColor = .white
@@ -83,12 +85,29 @@ final class CryptoListViewController: UIViewController {
         return button
     }()
     
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(CryptoListTableViewCell.self, forCellReuseIdentifier: CryptoListTableViewCell.reuseIdentifier)
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 80
+        tableView.backgroundColor = .wBackgroundGray2
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
+    }()
     
     // MARK: - Initialisers
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(viewModel: CryptoListViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     // MARK: - Lifecycle
@@ -129,7 +148,8 @@ final class CryptoListViewController: UIViewController {
             imageView,
             backgroundView,
             trendingLabel,
-            sortButton
+            sortButton,
+            tableView
         ]
         subviews.forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +168,8 @@ final class CryptoListViewController: UIViewController {
             imageConstraints() +
             backgroundViewConstraints() +
             trendingLabelConstraints() +
-            sortButtonConstraints()
+            sortButtonConstraints() +
+            tableViewConstraints()
         )
     }
 
@@ -221,5 +242,45 @@ final class CryptoListViewController: UIViewController {
         ]
     }
     
+    private func tableViewConstraints() -> [NSLayoutConstraint] {
+        [
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: trendingLabel.bottomAnchor, constant: 16),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            
+        ]
+    }
+    
 }
+
+// MARK: - Extension
+
+extension CryptoListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.coinsCount
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CryptoListTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? CryptoListTableViewCell else { return UITableViewCell() }
+        
+        guard let cryptoCurrency = viewModel.getCoin(at: indexPath.row) else { return UITableViewCell() }
+        
+        cell.setupCell(with: cryptoCurrency)
+        cell.selectionStyle = .none
+        cell.backgroundColor = .clear
+        
+        return cell
+    }
+    
+    
+}
+
+extension CryptoListViewController: UITableViewDelegate {
+    
+}
+
 
