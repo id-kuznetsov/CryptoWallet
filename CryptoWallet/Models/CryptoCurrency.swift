@@ -5,7 +5,7 @@
 //  Created by Ilya Kuznetsov on 09.04.2025.
 //
 
-import Foundation
+import UIKit
 
 struct CryptoCurrency {
     let id: String
@@ -15,5 +15,5 @@ struct CryptoCurrency {
     let percentChange24h: Double
     let marketCapUSD: Double
     let circulatingSupply: Double
-    let imageUrl: String?
+    let imageUrl: UIImage?
 }
