@@ -13,7 +13,7 @@ final class SingleCryptoViewController: UIViewController {
     
     // MARK: - Private Properties
     
-//    private var viewModel: SingleCryptoViewModelProtocol
+    private var viewModel: SingleCryptoViewModelProtocol
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -31,7 +31,6 @@ final class SingleCryptoViewController: UIViewController {
         label.textColor = .wBlue
         label.font = FontStyle.medium.font(size: 14)
         label.textAlignment = .center
-        label.text = "Etherium (ETH)" // TODO: for test
         return label
     }()
     
@@ -40,21 +39,18 @@ final class SingleCryptoViewController: UIViewController {
         label.textColor = .wBlue
         label.font = FontStyle.medium.font(size: 28)
         label.textAlignment = .center
-        label.text = "$32,128.80" // TODO: for test
         return label
     }()
     
     private lazy var changePriceLabel: UILabel = {
         let label = UILabel()
         label.font = FontStyle.medium.font(size: 14)
-        label.text = "2.5%" // TODO: for test
         label.textColor = .wTextSubtitle
         return label
     }()
     
     private lazy var changePercentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .icArrowUp // TODO: for test
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -125,11 +121,17 @@ final class SingleCryptoViewController: UIViewController {
         return label
     }()
     
-    
-
     // MARK: - Initialisers
     
+    init(viewModel: SingleCryptoViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
 
@@ -137,6 +139,7 @@ final class SingleCryptoViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        bindViewModel()
     }
 
     // MARK: - Action
@@ -146,11 +149,23 @@ final class SingleCryptoViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Public Methods
-    
-    
-    
     // MARK: - Private Methods
+    
+    private func bindViewModel() {
+        let coin = viewModel.coin
+        titleLabel.text = "\(coin.name) (\(coin.symbol))"
+        priceLabel.text = "$" + coin.priceUSD.formatCurrency(fractionDigits: 5)
+        changePriceLabel.text = String(format: "%.1f", abs(coin.percentChange24h)) + "%"
+        setChangePercentImage(for: coin.percentChange24h)
+        marketCapitalizationPriceLabel.text = "$" + coin.marketCapUSD.formatCurrency(fractionDigits: 0)
+        circulatingSuplyPriceLabel.text = coin.circulatingSupply.formatCurrency(fractionDigits: 0) + " \(coin.symbol)"
+    }
+    
+    private func setChangePercentImage(for percentChange: Double) {
+        changePercentImageView.image = percentChange >= 0 ? .icArrowUp : .icArrowDown
+    }
+
+
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundGray1

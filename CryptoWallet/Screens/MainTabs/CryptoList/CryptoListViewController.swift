@@ -50,6 +50,7 @@ final class CryptoListViewController: UIViewController {
         button.backgroundColor = .white
         button.titleLabel?.font = FontStyle.semiBold.font(size: 14)
         button.layer.cornerRadius = 17.5
+        button.addTarget(self, action: #selector(didTapLearnMoreButton), for: .touchUpInside)
         button.layer.masksToBounds = true
         return button
     }()
@@ -125,7 +126,6 @@ final class CryptoListViewController: UIViewController {
         
         bindViewModel()
         viewModel.loadCoins()
-        
     }
     
     // MARK: - Action
@@ -133,6 +133,11 @@ final class CryptoListViewController: UIViewController {
     @objc
     private func didTapMoreButton() {
         print("didTapMoreButton")
+    }
+    
+    @objc
+    private func didTapLearnMoreButton() {
+        print("didTapLearnMoreButton")
     }
     
     @objc
@@ -319,9 +324,9 @@ extension CryptoListViewController: UITableViewDataSource {
 
 extension CryptoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: переход
-        let singleCoinViewController = SingleCryptoViewController()
-//        let navigationController = UINavigationController(rootViewController: singleCoinViewController)
+        guard let selectedCoin = viewModel.getCoin(at: indexPath.row) else { return }
+        let singleCryptoViewModel = SingleCryptoViewModel(coin: selectedCoin)
+        let singleCoinViewController = SingleCryptoViewController(viewModel: singleCryptoViewModel)
         navigationController?.pushViewController(singleCoinViewController, animated: true)
     }
 }

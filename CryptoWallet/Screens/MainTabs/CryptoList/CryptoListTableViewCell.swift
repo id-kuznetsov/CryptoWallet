@@ -84,8 +84,8 @@ final class CryptoListTableViewCell: UITableViewCell {
         iconImageView.image = cryptoCurrency.image
         nameLabel.text = cryptoCurrency.name
         shortNameLabel.text = cryptoCurrency.symbol
-        priceLabel.text = formatCurrency(cryptoCurrency.priceUSD)
-        changePriceLabel.text = String(format: "%.1f", cryptoCurrency.percentChange24h) + "%"
+        priceLabel.text = "$" + cryptoCurrency.priceUSD.formatCurrency()
+        changePriceLabel.text = String(format: "%.1f", abs(cryptoCurrency.percentChange24h)) + "%"
         setChangePercentImage(for: cryptoCurrency.percentChange24h)
     }
     
@@ -105,20 +105,6 @@ final class CryptoListTableViewCell: UITableViewCell {
     
     private func setChangePercentImage(for percentChange: Double) {
         changePercentImageView.image = percentChange >= 0 ? .icArrowUp : .icArrowDown
-    }
-
-    private func formatCurrency(_ amount: Double) -> String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.minimumFractionDigits = 2
-        numberFormatter.maximumFractionDigits = 2
-        numberFormatter.locale = Locale(identifier: "en_US")
-        
-        if let formattedAmount = numberFormatter.string(from: NSNumber(value: amount)) {
-            return "$" + formattedAmount
-        }
-        
-        return "$0.00"
     }
     
     // MARK: Constraints
