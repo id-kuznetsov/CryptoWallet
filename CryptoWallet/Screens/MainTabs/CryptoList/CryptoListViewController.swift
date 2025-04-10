@@ -26,7 +26,7 @@ final class CryptoListViewController: UIViewController {
     private lazy var rightNavBarButton: UIButton = {
         let button = UIButton()
         button.setImage(.icDots, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = .white.withAlphaComponent(0.8)
         button.layer.cornerRadius = 24
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -169,7 +169,7 @@ final class CryptoListViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .wBackgroundMain
-
+        navigationController?.navigationBar.isHidden = true
         let subviews: [UIView] = [
             titleLabel,
             rightNavBarButton,
@@ -320,6 +320,9 @@ extension CryptoListViewController: UITableViewDataSource {
 extension CryptoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: переход
+        let singleCoinViewController = SingleCryptoViewController()
+//        let navigationController = UINavigationController(rootViewController: singleCoinViewController)
+        navigationController?.pushViewController(singleCoinViewController, animated: true)
     }
 }
 

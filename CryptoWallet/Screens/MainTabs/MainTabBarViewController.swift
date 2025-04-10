@@ -21,8 +21,10 @@ final class MainTabBarViewController: UITabBarController {
     // MARK: - Private Methods
     
     private func setTabs() {
+//        let cryptoListViewController = SingleCryptoViewController() // TODO: for test ⚠️
         let cryptoListViewModel = CryptoListViewModel()
         let cryptoListViewController = CryptoListViewController(viewModel: cryptoListViewModel)
+        let cryptoListNavigationController = UINavigationController(rootViewController: cryptoListViewController)
         cryptoListViewController.tabBarItem = UITabBarItem(
             title: nil,
             image: .icHome,
@@ -55,7 +57,7 @@ final class MainTabBarViewController: UITabBarController {
         )
         
         self.viewControllers = [
-            cryptoListViewController,
+            cryptoListNavigationController,
             dumbViewController1,
             dumbViewController2,
             dumbViewController3,
