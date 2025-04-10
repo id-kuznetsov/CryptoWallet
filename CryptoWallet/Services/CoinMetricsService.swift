@@ -17,7 +17,7 @@ final class CoinMetricsService {
     
     private let decoder = SnakeCaseJSONDecoder()
     private let urlSession = URLSession.shared
-    private var task: URLSessionTask?
+    private var tasks: [String: URLSessionTask] = [:]
     
     // MARK: - Initializers
     
@@ -30,7 +30,7 @@ final class CoinMetricsService {
         completion: @escaping (Result<CryptoResponse, Error>) -> Void
     ) {
         assert(Thread.isMainThread)
-        task?.cancel()
+        tasks[coin]?.cancel()
         
         guard let request = makeCoinMetricsRequest(for: coin) else {
             print("Make request fail \(#file)")
@@ -42,13 +42,13 @@ final class CoinMetricsService {
             switch result {
             case .success(let metrics):
                 completion(.success(metrics))
-                self.task = nil
+                self.tasks[coin] = nil
             case .failure(let error):
                 print("Error in \(#function) \(#file): \(error.localizedDescription)")
                 completion(.failure(error))
             }
         }
-        self.task = task
+        tasks[coin] = task
         task.resume()
     }
     

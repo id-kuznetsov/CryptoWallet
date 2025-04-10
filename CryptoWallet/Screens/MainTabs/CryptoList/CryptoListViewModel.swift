@@ -8,95 +8,24 @@
 import Foundation
 
 protocol CryptoListViewModelProtocol {
+    var onLoadingChange: ((Bool) -> Void)? { get set }
+    var onCoinsUpdate: (() -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
     var coinsCount: Int { get }
     
     func getCoin(at index: Int) -> CryptoCurrency?
+    func loadCoins()
 }
 
 final class CryptoListViewModel: CryptoListViewModelProtocol {
     
-    private var coins: [CryptoCurrency] = [
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        ),
-        CryptoCurrency(
-            id: "1",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceUSD: 32128.80,
-            percentChange24h: 2.5,
-            marketCapUSD: 231233,
-            circulatingSupply: 114.211 ,
-            imageUrl: .bitcoin
-        )
-    ]
+    var onLoadingChange: ((Bool) -> Void)?
+    var onCoinsUpdate: (() -> Void)?
+    var onError: ((String) -> Void)?
+    
+    private var coinService = CoinMetricsService.shared
+    
+    private var coins: [CryptoCurrency] = []
     
     var coinsCount: Int {
         coins.count
@@ -105,5 +34,52 @@ final class CryptoListViewModel: CryptoListViewModelProtocol {
     func getCoin(at index: Int) -> CryptoCurrency? {
         guard index < coins.count else { return nil }
         return coins[index]
+    }
+    
+    func loadCoins() {
+        onLoadingChange?(true)
+        
+        let mockCoins = [
+            "btc",
+            "eth",
+            "tron",
+            "luna",
+            "polkadot",
+            "dogecoin",
+            "tether",
+            "stellar",
+            "cardano",
+            "xrp"
+        ]
+        
+        var loadedCoins: [CryptoCurrency] = []
+        var errors: [Error] = []
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for coinName in mockCoins {
+            dispatchGroup.enter()
+            coinService.fetchCoinMetrics(for: coinName) { result in
+                switch result {
+                case .success(let coin):
+                    let cryptoCurrency = CryptoCurrency(data: coin.data)
+                    loadedCoins.append(cryptoCurrency)
+                case .failure(let error):
+                    errors.append(error)
+                }
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            self.onLoadingChange?(false)
+            if errors.isEmpty {
+                self.coins = loadedCoins
+                self.onCoinsUpdate?()
+            } else {
+                let errorDescription = errors.first?.localizedDescription ?? "Unknown error"
+                self.onError?(errorDescription)
+            }
+        }
     }
 }
