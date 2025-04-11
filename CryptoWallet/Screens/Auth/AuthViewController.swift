@@ -104,7 +104,7 @@ final class AuthViewController: UIViewController {
             window.makeKeyAndVisible()
         }
     }
-
+    
     private func showError(_ message: String) {
         view.endEditing(true)
         AlertPresenter.presentAlertWithTwoSelections(
@@ -212,7 +212,7 @@ final class AuthViewController: UIViewController {
         let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_: )))
         view.addGestureRecognizer(dismissKeyboardTap)
     }
-        
+    
     @objc
     func viewTapped(_ recognizer: UITapGestureRecognizer) {
         view.endEditing(true)

@@ -11,7 +11,6 @@ enum SortOption: CaseIterable {
     case increasing
     case decreasing
 
-
     var title: String {
         switch self {
         case .increasing:

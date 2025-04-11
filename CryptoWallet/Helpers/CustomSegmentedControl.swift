@@ -113,7 +113,7 @@ final class CustomSegmentedControl: UIView {
         guard selectedIndex < buttons.count else { return }
         let selectedButton = buttons[selectedIndex]
         
-        let newFrame = selectedButton.frame.insetBy(dx: 4, dy: 4) 
+        let newFrame = selectedButton.frame.insetBy(dx: 4, dy: 4)
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut]) {

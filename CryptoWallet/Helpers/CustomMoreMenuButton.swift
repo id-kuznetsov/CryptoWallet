@@ -8,7 +8,7 @@
 import UIKit
 
 final class CustomMoreMenuButton: UIButton {
-
+    
     init(title: String, image: UIImage?, action: Selector, target: Any?) {
         super.init(frame: .zero)
         setupButton(title: title, image: image, action: action, target: target)
@@ -18,7 +18,7 @@ final class CustomMoreMenuButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     private func setupButton(title: String, image: UIImage?, action: Selector, target: Any?) {
         var configuration = UIButton.Configuration.plain()
         configuration.title = title

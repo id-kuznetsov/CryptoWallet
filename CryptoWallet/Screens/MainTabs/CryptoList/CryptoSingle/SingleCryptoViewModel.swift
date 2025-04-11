@@ -7,9 +7,6 @@
 
 import Foundation
 
-protocol SingleCryptoViewModelProtocol {
-    var coin: CryptoCurrency { get }
-}
 
 final class SingleCryptoViewModel: SingleCryptoViewModelProtocol {
     

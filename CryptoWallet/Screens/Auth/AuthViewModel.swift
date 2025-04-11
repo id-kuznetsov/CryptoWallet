@@ -7,12 +7,6 @@
 
 import Foundation
 
-protocol AuthViewModelProtocol {
-    var onSuccess: (() -> Void)? { get set }
-    var onFailure: ((String) -> Void)? { get set }
-    func login(username: String, password: String)
-}
-
 final class AuthViewModel: AuthViewModelProtocol {
     
     // MARK: - Public Properties
@@ -36,6 +30,4 @@ final class AuthViewModel: AuthViewModelProtocol {
             onFailure?("Введены неправильный логин или пароль")
         }
     }
-    
-    
 }

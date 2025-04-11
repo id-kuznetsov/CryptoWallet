@@ -9,8 +9,6 @@ import UIKit
 
 final class SingleCryptoViewController: UIViewController {
 
-    // MARK: - Public Properties
-    
     // MARK: - Private Properties
     
     private var viewModel: SingleCryptoViewModelProtocol
@@ -64,8 +62,8 @@ final class SingleCryptoViewController: UIViewController {
     
     private lazy var segmentControl: CustomSegmentedControl = {
         let control = CustomSegmentedControl(segments: ["24H", "1W", "1Y", "ALL", "Point"])
-         control.translatesAutoresizingMaskIntoConstraints = false
-         return control
+        control.translatesAutoresizingMaskIntoConstraints = false
+        return control
     }()
     
     private lazy var backgroundView: UIView = {
@@ -134,14 +132,14 @@ final class SingleCryptoViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         bindViewModel()
     }
-
+    
     // MARK: - Action
     
     @objc
@@ -165,8 +163,6 @@ final class SingleCryptoViewController: UIViewController {
         changePercentImageView.image = percentChange >= 0 ? .icArrowUp : .icArrowDown
     }
 
-
-    
     private func setupUI() {
         view.backgroundColor = .wBackgroundGray1
         
@@ -293,9 +289,4 @@ final class SingleCryptoViewController: UIViewController {
             circulatingSuplyPriceLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -25)
         ]
     }
-    
-    
 }
-
-// MARK: - extensions
-

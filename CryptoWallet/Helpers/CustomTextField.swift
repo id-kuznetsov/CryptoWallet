@@ -8,7 +8,7 @@
 import UIKit
 
 final class CustomTextField: UITextField {
-
+    
     private let textPadding = UIEdgeInsets(top: 0, left: 62, bottom: 0, right: 20)
     
     init(backgroundText: String, image: UIImage? = nil) {
@@ -48,7 +48,6 @@ final class CustomTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: textPadding)
