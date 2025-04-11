@@ -192,10 +192,7 @@ final class CryptoListViewController: UIViewController {
         }
         
         viewModel.onError = { [weak self] errorMessage in
-            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self?.present(alert, animated: true)
-            //  TODO: добавить метод в AlertPresenter
+            self?.showErrorAlert(message: errorMessage)
         }
     }
     
@@ -346,6 +343,17 @@ final class CryptoListViewController: UIViewController {
             spinner.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
         ]
+    }
+    
+    private func showErrorAlert(message: String) {
+        AlertPresenter.presentAlertWithTwoSelections(
+            on: self,
+            title: message,
+            firstActionTitle: "Ок",
+            secondActionTitle: "Повторить"
+        ) { [weak self] in
+            self?.viewModel.loadCoins()
+        }
     }
     
 }
