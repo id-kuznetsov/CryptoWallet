@@ -193,7 +193,7 @@ final class SingleCryptoViewController: UIViewController {
             backButtonConstraints() +
             titleLabelConstraints() +
             priceLabelConstraints() +
-            changePriceStackViewConsraints() +
+            changePriceStackViewConstraints() +
             segmentControlConstraints() +
             backgroundViewConstraints() +
             marketStatisticLabelConstraints() +
@@ -204,89 +204,105 @@ final class SingleCryptoViewController: UIViewController {
         )
     }
     
+ 
     private func backButtonConstraints() -> [NSLayoutConstraint] {
         [
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 57),
-            backButton.heightAnchor.constraint(equalToConstant: 48),
-            backButton.widthAnchor.constraint(equalToConstant: 48)
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: LayoutConstants.backButtonTop),
+            backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
+            backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize)
         ]
     }
-    
+
     private func titleLabelConstraints() -> [NSLayoutConstraint] {
         [
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor)
         ]
     }
-    
+
     private func priceLabelConstraints() -> [NSLayoutConstraint] {
         [
             priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20)
+            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutConstants.titleToPriceSpacing)
         ]
     }
-    
-    private func changePriceStackViewConsraints() -> [NSLayoutConstraint] {
+
+    private func changePriceStackViewConstraints() -> [NSLayoutConstraint] {
         [
-            changePercentImageView.widthAnchor.constraint(equalToConstant: 12),
-            changePercentImageView.heightAnchor.constraint(equalToConstant: 12),
+            changePercentImageView.widthAnchor.constraint(equalToConstant: LayoutConstants.changeIconSize),
+            changePercentImageView.heightAnchor.constraint(equalToConstant: LayoutConstants.changeIconSize),
             changePriceStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            changePriceStackView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor)
+            changePriceStackView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: LayoutConstants.priceToChangeSpacing)
         ]
     }
-    
+
     private func segmentControlConstraints() -> [NSLayoutConstraint] {
         [
-            segmentControl.topAnchor.constraint(equalTo: changePriceStackView.bottomAnchor, constant: 20),
-            segmentControl.heightAnchor.constraint(equalToConstant: 56),
-            segmentControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            segmentControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            
+            segmentControl.topAnchor.constraint(equalTo: changePriceStackView.bottomAnchor, constant: LayoutConstants.changeStackToSegmentSpacing),
+            segmentControl.heightAnchor.constraint(equalToConstant: LayoutConstants.segmentHeight),
+            segmentControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            segmentControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.sideInset)
         ]
     }
-    
+
     private func backgroundViewConstraints() -> [NSLayoutConstraint] {
         [
-            backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -160),
+            backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutConstants.backgroundViewHeight),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ]
     }
-    
+
     private func marketStatisticLabelConstraints() -> [NSLayoutConstraint] {
         [
-            marketStatisticLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 25),
-            marketStatisticLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 25)
+            marketStatisticLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: LayoutConstants.statTopSpacing),
+            marketStatisticLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: LayoutConstants.sideInset)
         ]
     }
-    
+
     private func marketCapitalizationLabelConstraints() -> [NSLayoutConstraint] {
         [
-            marketCapitalizationLabel.topAnchor.constraint(equalTo: marketStatisticLabel.bottomAnchor, constant: 15),
-            marketCapitalizationLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 25)
+            marketCapitalizationLabel.topAnchor.constraint(equalTo: marketStatisticLabel.bottomAnchor, constant: LayoutConstants.statVerticalSpacing),
+            marketCapitalizationLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: LayoutConstants.sideInset)
         ]
     }
-    
+
     private func marketCapitalizationPriceLabelConstraints() -> [NSLayoutConstraint] {
         [
-            marketCapitalizationPriceLabel.topAnchor.constraint(equalTo: marketStatisticLabel.bottomAnchor, constant: 15),
-            marketCapitalizationPriceLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -25)
+            marketCapitalizationPriceLabel.topAnchor.constraint(equalTo: marketStatisticLabel.bottomAnchor, constant: LayoutConstants.statVerticalSpacing),
+            marketCapitalizationPriceLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -LayoutConstants.sideInset)
         ]
     }
-    
+
     private func circulatingSuplyLabelConstraints() -> [NSLayoutConstraint] {
         [
-            circulatingSuplyLabel.topAnchor.constraint(equalTo: marketCapitalizationLabel.bottomAnchor, constant: 15),
-            circulatingSuplyLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 25)
+            circulatingSuplyLabel.topAnchor.constraint(equalTo: marketCapitalizationLabel.bottomAnchor, constant: LayoutConstants.statVerticalSpacing),
+            circulatingSuplyLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: LayoutConstants.sideInset)
         ]
     }
-    
+
     private func circulatingSuplyPriceLabelConstraints() -> [NSLayoutConstraint] {
         [
-            circulatingSuplyPriceLabel.topAnchor.constraint(equalTo: marketCapitalizationPriceLabel.bottomAnchor, constant: 15),
-            circulatingSuplyPriceLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -25)
+            circulatingSuplyPriceLabel.topAnchor.constraint(equalTo: marketCapitalizationPriceLabel.bottomAnchor, constant: LayoutConstants.statVerticalSpacing),
+            circulatingSuplyPriceLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -LayoutConstants.sideInset)
         ]
+    }
+}
+
+private extension SingleCryptoViewController {
+    enum LayoutConstants {
+        static let sideInset: CGFloat = 25
+        static let backButtonSize: CGFloat = 48
+        static let backButtonTop: CGFloat = 57
+        static let titleToPriceSpacing: CGFloat = 20
+        static let priceToChangeSpacing: CGFloat = 0
+        static let changeStackToSegmentSpacing: CGFloat = 20
+        static let segmentHeight: CGFloat = 56
+        static let backgroundViewHeight: CGFloat = 160
+        static let statTopSpacing: CGFloat = 25
+        static let statVerticalSpacing: CGFloat = 15
+        static let changeIconSize: CGFloat = 12
     }
 }

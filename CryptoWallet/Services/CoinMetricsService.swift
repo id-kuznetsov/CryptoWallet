@@ -55,7 +55,7 @@ final class CoinMetricsService {
     // MARK: - Private Methods
     
     private func makeCoinMetricsRequest(for coin: String) -> URLRequest? {
-        let coinMetricsURL = URL(string: "https://data.messari.io/api/v1/assets/\(coin)/metrics")
+        let coinMetricsURL = URL(string: NetworkConstants.baseURL + coin + NetworkConstants.metricsPath)
         
         guard let url = coinMetricsURL else {
             print("Unable to construct URL for Coin Metrics Request")
@@ -63,7 +63,7 @@ final class CoinMetricsService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = HTTPMethod.get
         
         return request
     }

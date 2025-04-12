@@ -259,91 +259,91 @@ final class CryptoListViewController: UIViewController {
             spinnerConstraints()
         )
     }
-    
     private func titleLabelConstraints() -> [NSLayoutConstraint] {
         [
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 57),
-            titleLabel.heightAnchor.constraint(equalToConstant: 48)
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: LayoutConstants.topInset),
+            titleLabel.heightAnchor.constraint(equalToConstant: LayoutConstants.titleHeight)
         ]
     }
-    
+
     private func rightNavBarButtonConstraints() -> [NSLayoutConstraint] {
         [
-            rightNavBarButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            rightNavBarButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 57),
-            rightNavBarButton.heightAnchor.constraint(equalToConstant: 48),
-            rightNavBarButton.widthAnchor.constraint(equalToConstant: 48)
+            rightNavBarButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.sideInset),
+            rightNavBarButton.topAnchor.constraint(equalTo: view.topAnchor, constant: LayoutConstants.topInset),
+            rightNavBarButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonSize),
+            rightNavBarButton.widthAnchor.constraint(equalToConstant: LayoutConstants.buttonSize)
         ]
     }
-    
+
     private func affiliateLabelConstraints() -> [NSLayoutConstraint] {
         [
-            affiliateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            affiliateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 46),
-            affiliateLabel.heightAnchor.constraint(equalToConstant: 30)
+            affiliateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            affiliateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutConstants.affiliateTopSpacing),
+            affiliateLabel.heightAnchor.constraint(equalToConstant: LayoutConstants.affiliateHeight)
         ]
     }
-    
+
     private func learnMoreButtonConstraints() -> [NSLayoutConstraint] {
         [
-            learnMoreButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            learnMoreButton.topAnchor.constraint(equalTo: affiliateLabel.bottomAnchor, constant: 12),
-            learnMoreButton.heightAnchor.constraint(equalToConstant: 35),
-            learnMoreButton.widthAnchor.constraint(equalToConstant: 127)
+            learnMoreButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            learnMoreButton.topAnchor.constraint(equalTo: affiliateLabel.bottomAnchor, constant: LayoutConstants.learnMoreTopSpacing),
+            learnMoreButton.heightAnchor.constraint(equalToConstant: LayoutConstants.learnMoreHeight),
+            learnMoreButton.widthAnchor.constraint(equalToConstant: LayoutConstants.learnMoreWidth)
         ]
     }
-    
+
     private func imageConstraints() -> [NSLayoutConstraint] {
         [
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 189),
-            imageView.topAnchor.constraint(equalTo: rightNavBarButton.bottomAnchor, constant: 21),
-            imageView.widthAnchor.constraint(equalToConstant: 242),
-            imageView.heightAnchor.constraint(equalToConstant: 242)
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.imageLeading),
+            imageView.topAnchor.constraint(equalTo: rightNavBarButton.bottomAnchor, constant: LayoutConstants.imageTopSpacing),
+            imageView.widthAnchor.constraint(equalToConstant: LayoutConstants.imageSize),
+            imageView.heightAnchor.constraint(equalToConstant: LayoutConstants.imageSize)
         ]
     }
-    
+
     private func backgroundViewConstraints() -> [NSLayoutConstraint] {
         [
-            backgroundView.topAnchor.constraint(equalTo: learnMoreButton.bottomAnchor, constant: 55),
+            backgroundView.topAnchor.constraint(equalTo: learnMoreButton.bottomAnchor, constant: LayoutConstants.backgroundTopSpacing),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ]
     }
-    
+
     private func trendingLabelConstraints() -> [NSLayoutConstraint] {
         [
-            trendingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            trendingLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 24),
-            trendingLabel.heightAnchor.constraint(equalToConstant: 30)
+            trendingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideInset),
+            trendingLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: LayoutConstants.trendingTopSpacing),
+            trendingLabel.heightAnchor.constraint(equalToConstant: LayoutConstants.trendingHeight)
         ]
     }
-    
+
     private func sortButtonConstraints() -> [NSLayoutConstraint] {
         [
-            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            sortButton.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 30),
-            sortButton.heightAnchor.constraint(equalToConstant: 24),
-            sortButton.widthAnchor.constraint(equalToConstant: 24)
+            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.sideInset),
+            sortButton.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: LayoutConstants.sortButtonTopSpacing),
+            sortButton.heightAnchor.constraint(equalToConstant: LayoutConstants.sortButtonSize),
+            sortButton.widthAnchor.constraint(equalToConstant: LayoutConstants.sortButtonSize)
         ]
     }
-    
+
     private func tableViewConstraints() -> [NSLayoutConstraint] {
         [
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: trendingLabel.bottomAnchor, constant: 16),
+            tableView.topAnchor.constraint(equalTo: trendingLabel.bottomAnchor, constant: LayoutConstants.tableViewTopSpacing),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
     }
-    
+
     private func spinnerConstraints() -> [NSLayoutConstraint] {
         [
             spinner.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
         ]
     }
+
     
     private func showErrorAlert(message: String) {
         AlertPresenter.presentAlertWithTwoSelections(
@@ -388,6 +388,29 @@ extension CryptoListViewController: UITableViewDelegate {
         let singleCoinViewController = SingleCryptoViewController(viewModel: singleCryptoViewModel)
         navigationController?.pushViewController(singleCoinViewController, animated: true)
     }
+}
+
+// MARK: Layout
+
+private enum LayoutConstants {
+    static let sideInset: CGFloat = 25
+    static let topInset: CGFloat = 57
+    static let titleHeight: CGFloat = 48
+    static let buttonSize: CGFloat = 48
+    static let affiliateTopSpacing: CGFloat = 46
+    static let affiliateHeight: CGFloat = 30
+    static let learnMoreTopSpacing: CGFloat = 12
+    static let learnMoreHeight: CGFloat = 35
+    static let learnMoreWidth: CGFloat = 127
+    static let imageTopSpacing: CGFloat = 21
+    static let imageLeading: CGFloat = 189
+    static let imageSize: CGFloat = 242
+    static let backgroundTopSpacing: CGFloat = 55
+    static let trendingTopSpacing: CGFloat = 24
+    static let trendingHeight: CGFloat = 30
+    static let sortButtonTopSpacing: CGFloat = 30
+    static let sortButtonSize: CGFloat = 24
+    static let tableViewTopSpacing: CGFloat = 16
 }
 
 

@@ -140,32 +140,33 @@ final class AuthViewController: UIViewController {
     private func authImageViewConstraints() -> [NSLayoutConstraint] {
         [
             authImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            authImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 44),
-            authImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -44),
-            authImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 13),
-            authImageView.heightAnchor.constraint(equalToConstant: 287)
+            authImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: LayoutConstants.imageSideInset),
+            authImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -LayoutConstants.imageSideInset),
+            authImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutConstants.imageTopInset),
+            authImageView.heightAnchor.constraint(equalToConstant: LayoutConstants.imageHeight)
         ]
     }
-    
+
     private func textFieldsStackViewConstraints() -> [NSLayoutConstraint] {
         [
-            usernameTextField.heightAnchor.constraint(equalToConstant: 55),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 55),
-            
-            textFieldsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
-            textFieldsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25),
-            textFieldsStackView.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -25)
+            usernameTextField.heightAnchor.constraint(equalToConstant: LayoutConstants.textFieldHeight),
+            passwordTextField.heightAnchor.constraint(equalToConstant: LayoutConstants.textFieldHeight),
+
+            textFieldsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: LayoutConstants.textFieldSideInset),
+            textFieldsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -LayoutConstants.textFieldSideInset),
+            textFieldsStackView.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -LayoutConstants.textFieldBottomSpacing)
         ]
     }
-    
+
     private func loginButtonConstraints() -> [NSLayoutConstraint] {
         [
-            loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
-            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25),
-            loginButton.heightAnchor.constraint(equalToConstant: 55),
-            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -133)
+            loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: LayoutConstants.buttonSideInset),
+            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -LayoutConstants.buttonSideInset),
+            loginButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonHeight),
+            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutConstants.buttonBottomInset)
         ]
     }
+
     
     // MARK: Keyboard settings
     
@@ -232,4 +233,18 @@ extension AuthViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+private enum LayoutConstants {
+    static let imageSideInset: CGFloat = 44
+    static let imageTopInset: CGFloat = 13
+    static let imageHeight: CGFloat = 287
+
+    static let textFieldHeight: CGFloat = 55
+    static let textFieldSideInset: CGFloat = 25
+    static let textFieldBottomSpacing: CGFloat = 25
+
+    static let buttonSideInset: CGFloat = 25
+    static let buttonHeight: CGFloat = 55
+    static let buttonBottomInset: CGFloat = 133
 }
